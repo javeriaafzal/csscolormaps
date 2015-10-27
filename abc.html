@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#scroll {
+    background-color: #00FFFF;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+}
+
+div.hidden {
+    background-color: #00FF00;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+</style>
+</head>
+<body>
+
+<div id="demo"><h2>Lab task</h2></div>
+<div id="scroll"><p id="display"></p></div>
+<button type="button" onclick="loadDoc()">Click</button>
+
+<script>
+
+
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      //document.getElementById("demo").innerHTML = xhttp.responseText;
+	  
+	  var text=xhttp.responseText;
+	  obj = JSON.parse(text);
+	  for( var x=0;x<obj.length;x++)
+	 { var list = document.createElement("ul"); 
+	  var node = document.createElement("li"); 
+    var t = document.createTextNode(obj[x].color + " " + obj[x].value);
+    node.appendChild(t);
+	list.appendChild(node);
+    document.getElementById("scroll").appendChild(list);
+	}
+	
+	
+
+
+    }
+  }
+  
+  xhttp.open("GET", "ColorNameMap.json", true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>
